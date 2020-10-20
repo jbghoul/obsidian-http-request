@@ -103,6 +103,7 @@ module.exports = function(params) {
             .then(function(response) {
                 var error;
                 if (response.statusCode < 200 || response.statusCode > 299) {
+                    console.log(response);
                     error = new Error("HttpStatus" + response.statusCode);
                     error.statusCode = 404;
                     throw error;
@@ -154,7 +155,8 @@ module.exports = function(params) {
                 });
             })
             .catch(function(error) {
-                res.sendStatus(error.statusCode || 500);
+                console.log(error);
+                res.status(error.statusCode || 500).send(error.message);
                 next();
             });
     }
